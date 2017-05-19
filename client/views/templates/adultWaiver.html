@@ -111,13 +111,12 @@
   <div layout="row">
     <div flex="15"></div>
     <div layout="column" flex="70">
-      <div layout="row">
+      <div class="yellowBack" layout="row">
         <input required type="checkbox" ng-check="adultWaiver.agreed = true"
           ng-model="adultWaiver.agreed">
         <span>I acknowledge the above</span>
       </div>
-      <div layout="row" class="bufferDiv">
-      </div>
+      <br>
       <div layout="row">
         <div flex="15">
           <span>Signature:</span>
@@ -143,12 +142,10 @@
       <div layout="row" class="bufferDiv">
       </div>
       <div layout="row" flex="33">
-        <button type="button" name="button" class="themed-Btn goodButton"
-          ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
-        <div class="bufferDiv">
-        </div>
         <button type="button" name="button" class="themed-Btn badButton"
           ng-click="declineWaiver(); captureTime()">Decline</button>
+        <button type="button" name="button" class="themed-Btn goodButton"
+          ng-click="submitAdultWaiver(adultWaiver); captureTime()">Submit</button>
       </div>
     </div>
     <div flex="15"></div>
