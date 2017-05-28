@@ -262,8 +262,8 @@ myApp.controller('CheckoutController', ['$scope', '$location', '$http',
 
 $scope.formatTime = UtilitesService.formatTime;
 $scope.eventObject = UserService.eventObject;
+
 //object for input volunteers to bind to
-//NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
@@ -274,7 +274,6 @@ $scope.volunteerList = [];
 
 //Array to store checkoutList volunteers by ID to checkout.
 $scope.checkoutList = [];
-
 
 $scope.items = [];
 
@@ -350,6 +349,11 @@ $scope.checkoutVolunteers = function(volunteers) {
 //changes view to confirmation page
 $scope.changeView = function() {
   $location.path('/confirmation');
+};
+
+//changes view to checkInOut
+$scope.back = function(){
+  $location.path('/checkInOut');
 };
 
 }]);
