@@ -4,25 +4,11 @@ var passport = require('passport');
 var path = require('path');
 var pool = require('../modules/pool');
 
-//-*****************
-//-*** STRUCTURE ***
-//-*****************
-//-CHECK-IN
-//X1. POST with email, first_name, last_name to SELECT from DB
-//X2. POST email, first_name, last_name, under_18, birthdate (if not in "volunteer")
-//X3. POST waiver object info to "waiver" with appropriate fields
-//X4. \--> PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
-//X5. POST "volunteer_hours" with volunteer_id, event_id, date, time_in
-//-*****************
-
-// POST with email, first_name, last_name to SELECT from DB ("volunteer")
-// Then POST email, first_name, last_name, under_18, birthdate (if not in DB)
 router.post('/initial', function(req, res, next) {
   var volGiven = req.body;
 
   pool.connect(function(err, client, done) {
     if ( err ) {
-      console.log("Error connecting: ", err);
       next(err);
     }
     client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
@@ -32,7 +18,6 @@ router.post('/initial', function(req, res, next) {
           done();
 
           if ( err ) {
-            console.log("Error with volunteer query: ", err);
             next(err);
           }
           else if ( result.rows.length === 0 ) {
@@ -44,7 +29,6 @@ router.post('/initial', function(req, res, next) {
                   done();
 
                   if ( err ) {
-                    console.log("Error adding volunteer: ", err);
                     next(err);
                   }
                   else {
@@ -59,11 +43,7 @@ router.post('/initial', function(req, res, next) {
   });//end of pg.connect
 });//end of POST
 
-// POST waiver object info to "waiver" with appropriate fields
-// PUT to "volunteer" with has_signed_waiver, has_allowed_photos, parent_email
-// POST "volunteer_hours" with volunteer_id, event_id, date, time_in
 router.post('/complete', function(req, res, next) {
-  console.log("in server complete post!");
   var signedAdult,
       signedYouth,
       liabilitySigned,
@@ -83,8 +63,6 @@ signedYouth = false;
     signedYouth = true;
   }
 
-console.log("signedAdult: ", signedAdult);
-console.log("signedYouth: ", signedYouth);
   liabilitySigned = signedAdult || signedYouth;
 
   waiverInfo = {
@@ -113,10 +91,8 @@ console.log("signedYouth: ", signedYouth);
 
   pool.connect(function(err, client, done) {
     if ( err ) {
-      console.log("Error connecting: ", err);
       next(err);
     }
-    console.log("waiverInfo: ", waiverInfo);
     client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
       "(volunteer_id, adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
       "minor_lw_signature, minor_lw_date, minor_lw_guardian_signature, " +
@@ -135,11 +111,9 @@ console.log("signedYouth: ", signedYouth);
           done();
 
           if ( err ) {
-            console.log("Error inserting data on waiver table: ", err);
             next(err);
           }
           else {
-            console.log("server complete post worked!");
             client.query("INSERT INTO volunteer_hours (volunteer_id, event_id," +
               " date, time_in) VALUES ($1, $2, $3, $4)",
               [waiverInfo.volunteer_id, waiverInfo.event_id, waiverInfo.date,
@@ -148,11 +122,9 @@ console.log("signedYouth: ", signedYouth);
                   done();
 
                   if ( err ) {
-                    console.log("Error inserting to volunteer_hours: ", err);
                     next(err);
                   }
                   else {
-                    console.log("server complete second post worked!");
                     res.send(result.rows);
                   }
                 });//end of client.query
