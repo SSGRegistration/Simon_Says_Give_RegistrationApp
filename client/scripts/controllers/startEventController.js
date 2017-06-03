@@ -17,7 +17,6 @@ myApp.controller('startEventController', ['$scope', '$location', function($scope
       $location.path('checkInOut');
     }
     else {
-        console.log(code.thisCode);
         $scope.message = 'Please try again.';
     }
   };

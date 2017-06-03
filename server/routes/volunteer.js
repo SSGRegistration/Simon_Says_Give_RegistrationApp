@@ -10,6 +10,55 @@ router.post('/initial', function(req, res, next) {
         next(err);
       }
 
+<<<<<<< HEAD
+  pool.connect(function(err, client, done) {
+    if ( err ) {
+      next(err);
+    }
+    client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
+      "first_name = $2 AND last_name = $3;",
+      [volGiven.email, volGiven.first_name, volGiven.last_name],
+        function (err, result) {
+          done();
+
+          if ( err ) {
+            next(err);
+          }
+          else if ( result.rows.length === 0 ) {
+            client.query("INSERT INTO volunteer (email, first_name, last_name, " +
+              "under_18, birthdate) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
+              [volGiven.email, volGiven.first_name, volGiven.last_name,
+                volGiven.under_18, volGiven.birthdate],
+                function (err, result) {
+                  done();
+
+                  if ( err ) {
+                    next(err);
+                  }
+                  else {
+                    res.send(result.rows);
+                  }
+                });//end of client.query
+          }
+          else {
+            res.send(result.rows);
+          }
+        });//end of client.query
+  });//end of pg.connect
+});//end of POST
+
+router.post('/complete', function(req, res, next) {
+  var signedAdult,
+      signedYouth,
+      liabilitySigned,
+      waiverInfo;
+
+signedAdult = false;
+  if ( req.body.dateTopAdult && req.body.nameTopAdult && req.body.agreedAdult &&
+    req.body.nameBottomAdult && req.body.dateBottomAdult) {
+    signedAdult = true;
+  }
+=======
       client.query("SELECT * FROM volunteer WHERE email = $1 AND " +
         "first_name = $2 AND last_name = $3;",
         [volGiven.email, volGiven.first_name, volGiven.last_name],
@@ -62,6 +111,7 @@ router.post('/complete', function(req, res, next) {
         signedYouth,
         liabilitySigned,
         waiverInfo;
+>>>>>>> develop
 
     signedAdult = false;
     if ( req.body.dateTopAdult && req.body.nameTopAdult && req.body.agreedAdult &&
@@ -76,7 +126,11 @@ router.post('/complete', function(req, res, next) {
       signedYouth = true;
     }
 
+<<<<<<< HEAD
+  liabilitySigned = signedAdult || signedYouth;
+=======
     liabilitySigned = signedAdult || signedYouth;
+>>>>>>> develop
 
     waiverInfo = {
       //Adult waiver
@@ -102,6 +156,51 @@ router.post('/complete', function(req, res, next) {
       time_in: req.body.time_in //required
     };
 
+<<<<<<< HEAD
+  pool.connect(function(err, client, done) {
+    if ( err ) {
+      next(err);
+    }
+    client.query("WITH volunteer_hours AS (INSERT INTO waiver " +
+      "(volunteer_id, adult_lw_signature, adult_lw_date, minor_lw_guardian_name, " +
+      "minor_lw_signature, minor_lw_date, minor_lw_guardian_signature, " +
+      "pw_signature, pw_date, pw_guardian_signature) VALUES ($1, $2, $3, $4, $5, " +
+      "$6, $7, $8, $9, $10) RETURNING id) UPDATE volunteer SET " +
+      "has_signed_waiver = $11, has_allowed_photos = $12, parent_email = $13 " +
+      "WHERE id = $14;",
+      [waiverInfo.volunteer_id, waiverInfo.adult_lw_signature,
+        waiverInfo.adult_lw_date, waiverInfo.minor_lw_guardian_name,
+        waiverInfo.minor_lw_signature, waiverInfo.minor_lw_date,
+        waiverInfo.minor_lw_guardian_signature, waiverInfo.pw_signature,
+        waiverInfo.pw_date, waiverInfo.pw_guardian_signature,
+        waiverInfo.has_signed_waiver, waiverInfo.has_allowed_photos,
+        waiverInfo.parent_email, waiverInfo.volunteer_id],
+        function (err, result) {
+          done();
+
+          if ( err ) {
+            next(err);
+          }
+          else {
+            client.query("INSERT INTO volunteer_hours (volunteer_id, event_id," +
+              " date, time_in) VALUES ($1, $2, $3, $4)",
+              [waiverInfo.volunteer_id, waiverInfo.event_id, waiverInfo.date,
+                waiverInfo.time_in],
+                function (err, result) {
+                  done();
+
+                  if ( err ) {
+                    next(err);
+                  }
+                  else {
+                    res.send(result.rows);
+                  }
+                });//end of client.query
+          }
+        });//end of client.query
+  });//end of pg.connect
+});//end of POST
+=======
     pool.connect(function(err, client, done) {
       if ( err ) {
         next(err);
@@ -149,5 +248,6 @@ router.post('/complete', function(req, res, next) {
     res.sendStatus(401);
   }
 });
+>>>>>>> develop
 
 module.exports = router;

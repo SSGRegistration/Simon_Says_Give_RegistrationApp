@@ -9,7 +9,6 @@ myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserSer
     eventCode: ''
   };
 
-
   // Logins Admin user
   $scope.login = function() {
     if($scope.user.username == '' || $scope.user.password == '') {
@@ -55,7 +54,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserSer
       if(response.data == 'Code sent successfully.') {
         UtilitiesService.showAlert('A link to change the password was sent by email.');
       } else {
-        UtilitiesService.showAlert('There was an error sending the link to change the password.');
+        UtilitesService.showAlert('There was an error sending the link to change the password.');
       }
     });
   }
@@ -79,6 +78,4 @@ $scope.updatePassword = function() {
     });
   }
 };
-
-
 }]);

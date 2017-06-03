@@ -1,4 +1,6 @@
+
 myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'UtilitiesService', function($http, $location, UserService, UtilitiesService){
+
 
   var preregisteredVolunteerObj = {
     email: '',
@@ -58,21 +60,19 @@ myApp.factory('VolunteerService', ['$http', '$location', 'UserService', 'Utiliti
     var WaiverMonth = waiverDate.substr(5,2)-1;
     var WaiverDay = waiverDate.substr(8,2);
     var waiverFormattedDate = new Date(WaiverYear,WaiverMonth,WaiverDay,0,0,0);
-    console.log("Formatted: ", waiverFormattedDate);
     var today = new Date();
     today.setFullYear(today.getFullYear() - 1);
-    console.log("TODAY", today);
     if(waiverFormattedDate <= today){
-      console.log("false");
       return true;
     } else {
-      console.log("true");
       return false;
     }
   };
 
   preregisteredVolunteer = function(volunteer){
+
     volunteer.event_id = UserService.eventObject.eventCode;
+
       $http.post('/volunteer/initial', volunteer)
       .then(function(response){
         preregisteredVolunteerObj.email = response.data[0].email;

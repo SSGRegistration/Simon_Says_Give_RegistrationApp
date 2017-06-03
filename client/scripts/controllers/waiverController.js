@@ -1,9 +1,15 @@
+<<<<<<< HEAD
+myApp.controller('WaiverController', ['$scope', '$http', '$location', 'VolunteerService', function($scope, $http, $location, VolunteerService) {
+
+    $scope.message = '';
+=======
 myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$anchorScroll', '$http', '$location', 'VolunteerService', function($window, $scope, $rootScope, $anchorScroll, $http, $location, VolunteerService) {
 
  $scope.currentURL = $location.$$absUrl + "/#signatures";
  
 
   $scope.message = '';
+>>>>>>> develop
 
   $scope.waiverObj = VolunteerService.waiverObj;
   $scope.preregisteredVolunteerObj = VolunteerService.preregisteredVolunteerObj;
@@ -47,6 +53,12 @@ myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$ancho
 
     filledOut = noParentAll || parentAll;
 
+<<<<<<< HEAD
+    var youthSignature = $scope.waiverObj.nameBottomYouth;
+    var guardianSignature = $scope.waiverObj.guardianBottomYouth;
+
+=======
+>>>>>>> develop
     if ( filledOut ) {
        if ( noParentAll ) {
          $location.path("/override");
@@ -61,10 +73,13 @@ myApp.controller('WaiverController', ['$window', '$scope', '$rootScope', '$ancho
   }; // end submitYouthWaiver
 
   $scope.submitPhotoWaiver = function() {
+<<<<<<< HEAD
+=======
     console.log("current waiverObj: ", $scope.waiverObj);
     var filledOut;
     var filledOutAdult;
     var filledOutYouth;
+>>>>>>> develop
 
     filledOutAdult = $scope.waiverObj.agreedPhoto &&
                      $scope.waiverObj.dateBottomPhoto &&
