@@ -1,5 +1,5 @@
-myApp.controller('EventController', ['$scope','$mdDialog','UserService','UtilitesService','EventService',
-                function($scope,$mdDialog,UserService,UtilitesService,EventService) {
+myApp.controller('EventController', ['$scope','$mdDialog','UserService','UtilitiesService','EventService',
+                function($scope,$mdDialog,UserService,UtilitiesService,EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = EventService.serverResponseObject;
@@ -33,6 +33,6 @@ myApp.controller('EventController', ['$scope','$mdDialog','UserService','Utilite
     eventParams.eventCode = eventObject.event_code;
     eventParams.time = eventObject.event_until_time;
     EventService.logoutVolunteersByEvent(eventParams);
-  }
+  };
 
 }]);

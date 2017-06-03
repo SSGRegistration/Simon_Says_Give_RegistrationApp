@@ -28,7 +28,8 @@ h1 {
 }
 
 a {
-  color: gray;
+  color: white;
+  text-decoration: none; /* no underline */
 }
 
 .ssg_header {
@@ -360,4 +361,8 @@ footer {
   height: 75px;
   width: auto;
   font-size: 30px;
+}
+
+.extraPadding {
+  padding: 10px;
 }

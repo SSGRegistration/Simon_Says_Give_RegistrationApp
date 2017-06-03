@@ -1,11 +1,11 @@
 myApp.controller('CheckoutController', ['$scope', '$location', '$http',
-                'UtilitesService', 'UserService',
-                function($scope, $location, $http, UtilitesService, UserService) {
+                'UtilitiesService', 'UserService',
+                function($scope, $location, $http, UtilitiesService, UserService) {
 
-$scope.formatTime = UtilitesService.formatTime;
+$scope.formatTime = UtilitiesService.formatTime;
 $scope.eventObject = UserService.eventObject;
+
 //object for input volunteers to bind to
-//NEED TO UPDATE, BRING IN VOLUNTEER OBJECT FROM FACTORY
 $scope.volunteerObject = {};
 
 //variable to inform the ng-show on the search results div
@@ -17,7 +17,7 @@ $scope.volunteerList = [];
 //Array to store checkoutList volunteers by ID to checkout.
 $scope.checkoutList = [];
 
-
+//Functionality for checkboxes:
 $scope.items = [];
 
 $scope.toggle = function (item, list) {
@@ -34,31 +34,30 @@ $scope.exists = function (item, list) {
   return list.indexOf(item) > -1;
 };
 
-$scope.isIndeterminate = function() {
-  return ($scope.checkoutList.length !== 0 &&
-      $scope.checkoutList.length !== $scope.items.length);
-};
-
 $scope.isChecked = function() {
   return $scope.checkoutList.length === $scope.items.length;
 };
+//ends functionality for checkboxes
 
-$scope.toggleAll = function() {
-  if ($scope.checkoutList.length === $scope.items.length) {
-    $scope.checkoutList = [];
-  } else if ($scope.checkoutList.length === 0 || $scope.checkoutList.length > 0) {
-    $scope.checkoutList = $scope.items.slice(0);
-  }
-};
-
-//Connected to Search button - take inputs and check for records in database,
-//appends results to DOM
+//Function run on click of Search button - take inputs and check for records
+//in database, appends results to DOM
 $scope.search = function(volunteer) {
+  // var filledOut;
+  // filledOut = $scope.volunteerObject.email ||
+  //             $scope.volunteerObject.first_name ||
+  //             $scope.volunteerObject.last_name;
+  // FINISH IF/ELSE LOGIC HERE
+  // if (filledOut) {
+  //   // logic
+  // }
+  // else {
+  //   $scope.message = "Please enter email or name to search";
+  // }
   $scope.getVolunteers(volunteer);
   $scope.success = true;
 };
 
-//http post to server - takes response and sets it equal to the volunteerList array
+//http post to server - takes response and sets it equal to volunteerList
 $scope.getVolunteers = function(volunteer) {
   volunteer.eventID = $scope.eventObject.eventCode;
   $http.post('/checkout/', volunteer).then(function(response){
@@ -68,14 +67,15 @@ $scope.getVolunteers = function(volunteer) {
 
 $scope.checkout = function(checkoutList) {
   $scope.checkoutVolunteers(checkoutList);
+  // if (filledOut) {
   $scope.changeView();
+  // }
 };
 
 //PUT Route that updates the checkout time of chosen volunteer record(s)
 $scope.checkoutVolunteers = function(volunteers) {
   var timeToFormat = new Date();
   var checkoutTime = $scope.formatTime(timeToFormat);
-
   $http.put('/checkout/' + volunteers + '/' + checkoutTime).then(function(response){
     });
 };
@@ -83,6 +83,11 @@ $scope.checkoutVolunteers = function(volunteers) {
 //changes view to confirmation page
 $scope.changeView = function() {
   $location.path('/confirmed');
+};
+
+//changes view to checkInOut page
+$scope.back = function() {
+  $location.path('/checkInOut');
 };
 
 }]);

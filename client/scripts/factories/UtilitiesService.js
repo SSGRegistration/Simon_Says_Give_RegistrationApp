@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 myApp.factory('UtilitesService', ['$http','$mdDialog', function($http,$mdDialog){
+=======
+myApp.factory('UtilitiesService', ['$http','$mdDialog', function($http,$mdDialog){
+>>>>>>> develop
 
 var todaysDate = new Date();
 
@@ -33,4 +37,8 @@ return {
     showAlert: showAlert
   };
 
+<<<<<<< HEAD
 }]);//end of UtilitesService
+=======
+}]);//end of UtilitiesService
+>>>>>>> develop

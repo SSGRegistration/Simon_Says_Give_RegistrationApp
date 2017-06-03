@@ -1,4 +1,6 @@
-myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitesService', function($scope, $http, $location, UserService, VolunteerService, UtilitesService){
+
+myApp.controller('VolunteerController', ['$scope', '$http', '$location', 'UserService', 'VolunteerService', 'UtilitiesService', function($scope, $http, $location, UserService, VolunteerService, UtilitiesService){
+
 
 $scope.redirect = UserService.redirect;
 $scope.volunteer = VolunteerService.volunteer;
@@ -37,6 +39,7 @@ $scope.cancel = function(){
   $location.path('/checkInOut');
 };
 
+<<<<<<< HEAD
 $scope.minmaxDate = function() {
     this.myDate = new Date();
     this.maxDate = new Date(
@@ -47,3 +50,6 @@ $scope.minmaxDate = function() {
 };
 $scope.minmaxDate();
 }]);//end VolunteerController
+=======
+}]);
+>>>>>>> develop

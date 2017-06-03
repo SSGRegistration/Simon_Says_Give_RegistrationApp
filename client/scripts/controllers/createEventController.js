@@ -1,5 +1,5 @@
-myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitesService','EventService',
-                function($scope, $location, UserService, UtilitesService, EventService) {
+myApp.controller('CreateEventController', ['$scope', '$location','UserService', 'UtilitiesService','EventService',
+                function($scope, $location, UserService, UtilitiesService, EventService) {
 
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = EventService.serverResponseObject;
@@ -22,19 +22,19 @@ myApp.controller('CreateEventController', ['$scope', '$location','UserService', 
     if (alphanumeric($scope.event.eventCode)) {
       if ($scope.event.eventCode != '' && $scope.event.eventName != '' && $scope.event.eventTeam != '' && $scope.event.eventDate) {
         eventToSend = angular.copy($scope.event);
-        eventToSend.eventDate = UtilitesService.formatDate(eventToSend.eventDate);
+        eventToSend.eventDate = UtilitiesService.formatDate(eventToSend.eventDate);
 
         if (eventToSend.eventFromTime) {
-          eventToSend.eventFromTime = UtilitesService.formatTime(eventToSend.eventFromTime);
+          eventToSend.eventFromTime = UtilitiesService.formatTime(eventToSend.eventFromTime);
         }
         if (eventToSend.eventUntilTime) {
-          eventToSend.eventUntilTime = UtilitesService.formatTime(eventToSend.eventUntilTime);
+          eventToSend.eventUntilTime = UtilitiesService.formatTime(eventToSend.eventUntilTime);
         }
         // send information to factory
         EventService.postEvent(eventToSend);
       }
     } else {
-      UtilitesService.showAlert('Please enter an alphanumeric code');
+      UtilitiesService.showAlert('Please enter an alphanumeric code');
     }
   } // function createEvent()
 
