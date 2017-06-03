@@ -11,20 +11,14 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
   $scope.toDate;
   var errorMessage = "";
 
-
-  console.log('ExportController loaded');
-
   // prepares information (parameter dates) and calls function in factory
   $scope.exportInformation = function(option) {
-    console.log('Export Information clicked, exporting: ', option);
     data = {
       fromDate : new Date(),
       toDate : new Date()
     };
     // checks if option selected was hours and prepares data object of parameters
     if ($scope.exportOption === 'hours'){
-      console.log('From Date', $scope.fromDate);
-      console.log('To Date', $scope.toDate);
       data.fromDate = $scope.fromDate;
       data.toDate = $scope.toDate;
       if (validDates (data.fromDate, data.toDate)) {
@@ -52,7 +46,6 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       return false;
     }
   };
-
   // enables/disables datepickers depending on option selected
   $scope.toggleEnableDates = function() {
     if ($scope.exportOption === 'hours'){
@@ -63,5 +56,4 @@ myApp.controller('ExportController', ['$scope', '$http', '$location', 'UserServi
       $scope.datesEnabledValue = true;
     }
   };
-
 }]);

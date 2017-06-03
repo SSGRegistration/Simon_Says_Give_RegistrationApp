@@ -5,8 +5,6 @@ myApp.controller('ImportController', ['$scope', '$http', '$location', 'UserServi
   $scope.redirect = UserService.redirect;
   $scope.serverResponseObject = CSVService.serverResponseObject;
 
-  console.log('ImportController loaded');
-
   var reader;
   var progress = document.querySelector('.percent');
 

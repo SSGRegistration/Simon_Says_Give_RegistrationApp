@@ -1,5 +1,4 @@
 myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
-  console.log('CSVService Loaded');
 
   serverResponseObject = {};
 
@@ -8,16 +7,13 @@ myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
     var csvToPost = {};
     csvToPost.fileContent = csv;
     $http.post('/csv/upload', csvToPost).then(function(response) {
-      console.log('Back from server after posting csv content', response);
       showAlert(response.data);
     });
   };
 
   // Requests CSV file from server
   requestVolunteerCSV = function() {
-    console.log('Getting volunteer .csv');
     $http.get('/csv/export/volunteer').then(function(response) {
-      console.log('Back from server after getting csv content');
       // opens the route - downloads the file
       window.open('/csv/export/volunteer');
     });
@@ -25,12 +21,9 @@ myApp.factory('CSVService', ['$http','$mdDialog', function($http,$mdDialog){
 
   // Requests CSV file from server
   requestHoursCSV = function(data) {
-    console.log('Getting hours .csv ');
-    console.log('Data: ', data);
     var formattedFromDate = formatDate(data.fromDate);
     var formattedToDate = formatDate(data.toDate);
     $http.get('/csv/export/hours/' + formattedFromDate + '/' + formattedToDate).then(function(response) {
-      console.log('Back from server after getting csv content',response);
       // opens the route - downloads the file
       var route = '/csv/export/hours/' + formattedFromDate + '/' + formattedToDate;
       window.open(route);
